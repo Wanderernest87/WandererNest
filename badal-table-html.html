@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadual Contoh Badal dalam Bahasa Arab</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: right; }
+        input, select { padding: 5px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Jadual Contoh Badal dalam Bahasa Arab</h1>
+    <input type="text" id="searchInput" placeholder="Cari...">
+    <select id="typeFilter">
+        <option value="">Semua</option>
+        <option value="1">Badal al-kull min al-kull</option>
+        <option value="2">Badal al-ba'd min al-kull</option>
+        <option value="3">Badal al-ishtimaal</option>
+    </select>
+    <table id="badalTable">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Ayat</th>
+                <th>البدل (Badal)</th>
+                <th>المبدل منه</th>
+                <th>Jenis Badal</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const badalData = [
+            { id: 1, ayat: "جاء أخي علي", badal: "علي", mubdalMinhu: "أخي", jenis: "1" },
+            { id: 2, ayat: "أكلت الفاكهة التفاحة", badal: "التفاحة", mubdalMinhu: "الفاكهة", jenis: "1" },
+            { id: 3, ayat: "زرت المدينة كوالالمبور", badal: "كوالالمبور", mubdalMinhu: "المدينة", jenis: "1" },
+            { id: 4, ayat: "أكلت التفاحة نصفها", badal: "نصفها", mubdalMinhu: "التفاحة", jenis: "2" },
+            { id: 5, ayat: "قرأت الكتاب ثلث صفحاته", badal: "ثلث صفحاته", mubdalMinhu: "الكتاب", jenis: "2" },
+            { id: 6, ayat: "شربت الماء كوبا منه", badal: "كوبا منه", mubdalMinhu: "الماء", jenis: "2" },
+            { id: 7, ayat: "أعجبني الطالب ذكاؤه", badal: "ذكاؤه", mubdalMinhu: "الطالب", jenis: "3" },
+            { id: 8, ayat: "أحببت الحديقة أزهارها", badal: "أزهارها", mubdalMinhu: "الحديقة", jenis: "3" },
+            { id: 9, ayat: "تعبت من السفر طوله", badal: "طوله", mubdalMinhu: "السفر", jenis: "3" },
+        ];
+
+        function renderTable(data) {
+            const tableBody = document.querySelector('#badalTable tbody');
+            tableBody.innerHTML = '';
+            data.forEach(item => {
+                const row = `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.ayat}</td>
+                    <td>${item.badal}</td>
+                    <td>${item.mubdalMinhu}</td>
+                    <td>${item.jenis}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value;
+            const filteredData = badalData.filter(item => 
+                (item.ayat.includes(searchTerm) || item.badal.includes(searchTerm) || item.mubdalMinhu.includes(searchTerm)) &&
+                (typeFilter === "" || item.jenis === typeFilter)
+            );
+            renderTable(filteredData);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', filterData);
+        document.getElementById('typeFilter').addEventListener('change', filterData);
+
+        renderTable(badalData);
+    </script>
+</body>
+</html>
